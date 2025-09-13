@@ -1,5 +1,6 @@
 package com.lmscr.testspring.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class User implements Serializable {
     /**
      * 用户ID
      */
+    @TableId
     private Integer userId;
     /**
      * 用户名

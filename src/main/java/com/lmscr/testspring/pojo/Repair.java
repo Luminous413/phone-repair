@@ -1,6 +1,7 @@
 package com.lmscr.testspring.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class Repair {
     /**
      * 报修请求ID
      */
+    @TableId
     private Integer requestId;
     /**
      * 用户ID
