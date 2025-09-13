@@ -1,6 +1,5 @@
 package com.lmscr.testspring.service.util;
 
-import com.lmscr.testspring.module.LoginUser;
 import lombok.Data;
 
 /**

@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lmscr.testspring.mapper.UserMapper;
-import com.lmscr.testspring.module.LoginUser;
-import com.lmscr.testspring.module.RegisterUser;
-import com.lmscr.testspring.module.Role;
-import com.lmscr.testspring.module.UserListQueryModule;
+import com.lmscr.testspring.module.*;
 import com.lmscr.testspring.pojo.User;
 import com.lmscr.testspring.service.UserService;
 import com.lmscr.testspring.service.util.CheckParams;
@@ -17,11 +14,10 @@ import com.lmscr.testspring.service.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.lang.reflect.Array;
-
 
 /**
  * 用户服务实现类
@@ -31,7 +27,7 @@ import java.lang.reflect.Array;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     /**
      * 用户登录
@@ -41,7 +37,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return 登录用户信息
      */
     @Override
-    public LoginUser login(String usernameOrEmail, String password) {
+    public CurrentUser login(String usernameOrEmail, String password) {
         // 构建组合查询条件（用户名或邮箱匹配）
         User user = this.getOne(new QueryWrapper<User>()
                 // 用户名条件
@@ -61,22 +57,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         // 将User实体转换为登录用户信息对象
-        LoginUser loginUser = new LoginUser();
+        CurrentUser currentUser = new CurrentUser();
         // 设置用户ID
-        loginUser.setUserId(user.getUserId());
+        currentUser.setUserId(user.getUserId());
         // 设置用户名
-        loginUser.setUserName(user.getUserName());
+        currentUser.setUserName(user.getUserName());
         // 设置用户邮箱
-        loginUser.setUserEmail(user.getUserEmail());
+        currentUser.setUserEmail(user.getUserEmail());
         // 设置角色ID（用于权限控制）
-        loginUser.setRoleId(user.getRoleId());
+        currentUser.setRoleId(user.getRoleId());
         // 设置用户简介
-        loginUser.setUserBio(user.getUserBio());
+        currentUser.setUserBio(user.getUserBio());
         // 设置用户手机号
-        loginUser.setUserPhone(user.getUserPhone());
+        currentUser.setUserPhone(user.getUserPhone());
+
+        // 更新用户最后活跃时间
+        userMapper.updateUserLastActive(user.getUserId(), LocalDateTime.now());
 
         // 登录成功，返回用户信息
-        return loginUser;
+        return currentUser;
     }
 
 
@@ -113,7 +112,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 设置用户密码（MD5 加密）
         user.setUserPasswordHash(Md5Password.generateMD5(registerUser.getUserPasswordHash()));
         // 设置角色 ID（默认普通用户）
-        user.setRoleId("2");
+        user.setRoleId(2);
         // 调用 MyBatis-plus 的 save 方法保存用户
         boolean save = this.save(user);
         if (save) {
@@ -193,5 +192,103 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return Result.fail("没有查询到数据", 404);
         }
         return Result.success("查询成功", roleList);
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param currentUser 当前用户
+     * @return 更新结果
+     */
+    @Override
+    public Result<String> updateUser(CurrentUser currentUser) {
+        // 校验用户是否存在
+        User user = this.getOne(new QueryWrapper<User>()
+                .eq("user_id", currentUser.getUserId()));
+        if (user == null) {
+            return Result.fail("用户不存在", 404);
+        }
+        // 参数校验
+        if (currentUser.getRoleId() == null) {
+            currentUser.setRoleId(2);
+        }
+        if (currentUser.getUserName() == null) {
+            currentUser.setUserName(user.getUserName());
+        }
+        if (currentUser.getUserEmail() == null) {
+            currentUser.setUserEmail(user.getUserEmail());
+        }
+        if (currentUser.getUserPhone() == null) {
+            currentUser.setUserPhone("");
+        }
+        if (currentUser.getUserBio() == null) {
+            currentUser.setUserBio("");
+        }
+        // 更新用户信息
+        boolean isUpdate = userMapper.updateUserByUserId(
+                currentUser.getUserId(),
+                currentUser.getUserName(),
+                currentUser.getUserEmail(),
+                currentUser.getUserPhone(),
+                currentUser.getUserBio(),
+                currentUser.getRoleId()
+        );
+        if (isUpdate) {
+            return Result.success("更新成功", "");
+        }
+        return Result.fail("更新失败", 500);
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param userId 用户ID
+     * @return 删除结果
+     */
+    @Override
+    public Result<String> deleteUser(Integer userId) {
+        // 校验用户是否存在
+        User user = this.getOne(new QueryWrapper<User>()
+                .eq("user_id", userId));
+        if (user == null) {
+            return Result.fail("用户不存在", 404);
+        }
+        // 删除用户
+        boolean isDelete = userMapper.deleteUserByUserId(userId);
+        if (isDelete) {
+            return Result.success("删除成功", "");
+        }
+        return Result.fail("删除失败", 500);
+    }
+
+    /**
+     * 创建用户
+     *
+     * @param newUser 新用户
+     * @return 创建结果
+     */
+    @Override
+    public Result<String> createNewUser(NewUser newUser) {
+        // 参数校验
+        if (newUser.getUserPwd() == null) {
+            return Result.fail("密码不能为空", 500);
+        }
+        if (newUser.getUserPhone() == null) {
+            newUser.setUserPhone("");
+        }
+        // 创建用户
+        boolean isCreate = userMapper.createNewUser(
+                newUser.getUserName(),
+                newUser.getUserEmail(),
+                Md5Password.generateMD5(newUser.getUserPwd()),
+                newUser.getUserPhone(),
+                "",
+                2,
+                LocalDateTime.now()
+        );
+        if (isCreate) {
+            return Result.success("创建成功", "");
+        }
+        return Result.fail("创建失败", 500);
     }
 }

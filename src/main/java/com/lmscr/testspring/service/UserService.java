@@ -1,14 +1,10 @@
 package com.lmscr.testspring.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lmscr.testspring.module.LoginUser;
-import com.lmscr.testspring.module.RegisterUser;
-import com.lmscr.testspring.module.Role;
-import com.lmscr.testspring.module.UserListQueryModule;
+import com.lmscr.testspring.module.*;
 import com.lmscr.testspring.pojo.User;
 import com.lmscr.testspring.service.util.Result;
 
-import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +19,7 @@ public interface UserService extends IService<User> {
      * @param password        密码
      * @return 登录用户
      */
-    LoginUser login(String usernameOrEmail, String password);
+    CurrentUser login(String usernameOrEmail, String password);
 
     /**
      * 用户注册
@@ -55,4 +51,28 @@ public interface UserService extends IService<User> {
      * @return 角色列表
      */
     Result<List<Role>> getRoleList();
+
+    /**
+     * 更新用户信息
+     *
+     * @param currentUser 当前用户
+     * @return 更新结果
+     */
+    Result<String> updateUser(CurrentUser currentUser);
+
+    /**
+     * 删除用户
+     *
+     * @param userId 用户ID
+     * @return 删除结果
+     */
+    Result<String> deleteUser(Integer userId);
+
+    /**
+     * 创建用户
+     *
+     * @param newUser 新用户
+     * @return 创建结果
+     */
+    Result<String> createNewUser(NewUser newUser);
 }

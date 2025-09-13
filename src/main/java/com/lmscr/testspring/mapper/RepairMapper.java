@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page; // 使用MP的Page
 import com.lmscr.testspring.module.ReceptionistVO;
 import com.lmscr.testspring.pojo.Repair;
-import com.lmscr.testspring.pojo.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

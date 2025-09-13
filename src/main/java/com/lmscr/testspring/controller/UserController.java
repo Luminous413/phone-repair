@@ -1,15 +1,11 @@
 package com.lmscr.testspring.controller;
 
-import com.lmscr.testspring.module.LoginUser;
-import com.lmscr.testspring.module.RegisterUser;
-import com.lmscr.testspring.module.Role;
-import com.lmscr.testspring.module.UserListQueryModule;
+import com.lmscr.testspring.module.*;
 import com.lmscr.testspring.service.UserService;
 import com.lmscr.testspring.service.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 
@@ -30,15 +26,15 @@ public class UserController {
      * @return 登录用户
      */
     @PostMapping("/login")
-    public Result<LoginUser> login(@RequestParam(value = "usernameOrEmail") String usernameOrEmail, @RequestParam(value = "password") String password) {
+    public Result<CurrentUser> login(@RequestParam(value = "usernameOrEmail") String usernameOrEmail, @RequestParam(value = "password") String password) {
         // 调用用户服务层登录方法
-        LoginUser loginUser = userService.login(usernameOrEmail, password);
-        if (loginUser == null) {
+        CurrentUser currentUser = userService.login(usernameOrEmail, password);
+        if (currentUser == null) {
             // 登录失败
             return Result.fail("登录失败", 400);
         }
         // 登录成功
-        return Result.success("登录成功", loginUser);
+        return Result.success("登录成功", currentUser);
     }
 
     /**
@@ -83,5 +79,38 @@ public class UserController {
     @GetMapping("/getRoleList")
     public Result<List<Role>> getRoleList() {
         return userService.getRoleList();
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param currentUser 当前用户
+     * @return 更新结果
+     */
+    @PostMapping("/updateUser")
+    public Result<String> updateUser(@RequestBody CurrentUser currentUser) {
+        return userService.updateUser(currentUser);
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param userId 用户 ID
+     * @return 删除结果
+     */
+    @DeleteMapping("/delete/{userId}")
+    public Result<String> deleteUser(@PathVariable("userId") Integer userId) {
+        return userService.deleteUser(userId);
+    }
+
+    /**
+     * 创建用户
+     *
+     * @param newUser 新用户
+     * @return 创建结果
+     */
+    @PostMapping("/createNewUser")
+    public Result<String> createNewUser(@RequestBody NewUser newUser) {
+        return userService.createNewUser(newUser);
     }
 }
