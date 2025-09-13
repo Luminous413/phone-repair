@@ -268,7 +268,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return 创建结果
      */
     @Override
-    public Result<String> createUser(NewUser newUser) {
+    public Result<String> createNewUser(NewUser newUser) {
         // 参数校验
         if (newUser.getUserPwd() == null) {
             return Result.fail("密码不能为空", 500);

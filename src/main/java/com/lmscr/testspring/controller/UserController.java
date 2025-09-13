@@ -3,7 +3,6 @@ package com.lmscr.testspring.controller;
 import com.lmscr.testspring.module.*;
 import com.lmscr.testspring.service.UserService;
 import com.lmscr.testspring.service.util.Result;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,12 +99,18 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping("/delete/{userId}")
-    public Result<String> deleteUser(@PathParam("userId") Integer userId) {
+    public Result<String> deleteUser(@PathVariable("userId") Integer userId) {
         return userService.deleteUser(userId);
     }
 
-    @PostMapping("/createUser")
-    public Result<String> createUser(@RequestBody NewUser newUser) {
-        return userService.createUser(newUser);
+    /**
+     * 创建用户
+     *
+     * @param newUser 新用户
+     * @return 创建结果
+     */
+    @PostMapping("/createNewUser")
+    public Result<String> createNewUser(@RequestBody NewUser newUser) {
+        return userService.createNewUser(newUser);
     }
 }

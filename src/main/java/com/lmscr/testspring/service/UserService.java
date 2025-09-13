@@ -74,5 +74,5 @@ public interface UserService extends IService<User> {
      * @param newUser 新用户
      * @return 创建结果
      */
-    Result<String> createUser(NewUser newUser);
+    Result<String> createNewUser(NewUser newUser);
 }
