@@ -2,12 +2,8 @@ package com.lmscr.testspring.module;
 
 import lombok.Data;
 
-/**
- * 登录用户模块：封装登录用户的基本信息
- * 用于接收前端登录用户的信息
- */
 @Data // 自动生成 getter/setter/toString 等方法（Lombok 注解）
-public class LoginUser {
+public class CurrentUser {
     /**
      * 用户唯一标识
      */
@@ -23,7 +19,7 @@ public class LoginUser {
     /**
      * 关联角色 ID（用于权限控制）
      */
-    private String roleId;
+    private Integer roleId;
     /**
      * 用户个人简介
      */

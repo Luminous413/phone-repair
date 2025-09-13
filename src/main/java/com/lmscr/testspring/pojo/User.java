@@ -37,7 +37,7 @@ public class User implements Serializable {
     /**
      * 角色ID
      */
-    private String roleId;
+    private Integer roleId;
     /**
      * 用户简介
      */
