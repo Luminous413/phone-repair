@@ -11,8 +11,8 @@
     <groupId>com.example</groupId>
     <artifactId>phone-repair</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>test-spring</name>
-    <description>test-spring</description>
+    <name>phone-repair</name>
+    <description>phone-repair</description>
     <url/>
     <licenses>
         <license/>
@@ -100,10 +100,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
             <version>3.5.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 
