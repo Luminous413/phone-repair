@@ -69,28 +69,29 @@ public interface UserMapper extends BaseMapper<User> {
      */
     @Select("""
                 SELECT
-                    user_id AS userId,
-                    user_name AS userName,
-                    user_email AS userEmail,
-                    role_id AS roleId,
-                    user_bio AS userBio,
-                    user_phone AS userPhone,
-                    user_created_at AS userCreatedAt
+                    u.user_id AS userId,
+                    u.user_name AS userName,
+                    u.user_email AS userEmail,
+                    u.role_id AS roleId,
+                    u.user_bio AS userBio,
+                    u.user_phone AS userPhone,
+                    u.user_created_at AS userCreatedAt
                 FROM
-                    yjx_user
+                    yjx_user u
+                LEFT JOIN yjx_user u2 ON #{userId} = u2.user_id
                 WHERE 1 = 1
-                AND (#{userRole} IN (1, 3) OR user_id = #{userId})
-                AND (user_name LIKE CONCAT('%', #{searchKeyword}, '%')
-                    OR user_email LIKE CONCAT('%', #{searchKeyword}, '%')
-                    OR user_bio LIKE CONCAT('%', #{searchKeyword}, '%')
-                    OR user_phone LIKE CONCAT('%', #{searchKeyword}, '%'))
+                AND (u2.role_id IN (1, 3) OR u.user_id = #{userId})
+                AND (u.user_name LIKE CONCAT('%', #{searchKeyword}, '%')
+                    OR u.user_email LIKE CONCAT('%', #{searchKeyword}, '%')
+                    OR u.user_bio LIKE CONCAT('%', #{searchKeyword}, '%')
+                    OR u.user_phone LIKE CONCAT('%', #{searchKeyword}, '%'))
                 ORDER BY
                     CASE WHEN #{sortField} IS NOT NULL AND #{sortOrder} IS NOT NULL
                          THEN CASE #{sortField} 
-                              WHEN 'createdAt' THEN user_created_at 
-                              WHEN 'userName' THEN user_name 
-                              ELSE user_created_at END
-                    ELSE user_created_at END
+                              WHEN 'createdAt' THEN u.user_created_at
+                              WHEN 'userName' THEN u.user_name
+                              ELSE u.user_created_at END
+                    ELSE u.user_created_at END
                     -- 排序方向：默认降序
                     ${sortOrder == 'desc' ? 'DESC' : 'ASC'}
             """)

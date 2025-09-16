@@ -49,6 +49,7 @@ public class PartsServiceImpl extends ServiceImpl<PartsMapper, Parts> implements
         Page<Parts> page = new Page<>(partsListQueryModule.getPageNum(), partsListQueryModule.getPageSize());
         IPage<Parts> partsIPage = partsMapper.selectPartsList(
                 page,
+                partsListQueryModule.getUserId(),
                 partsListQueryModule.getUserRole(),
                 partsListQueryModule.getSearchKeyword(),
                 partsListQueryModule.getSortField(),

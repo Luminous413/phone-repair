@@ -70,7 +70,7 @@ public class ManagementServiceImpl extends ServiceImpl<ManagementMapper, Managem
 
         // 判断是否查询成功
         if (pageResult.getRecords().isEmpty()) {
-            return Result.fail("查询失败", 500);
+            return Result.fail("查询失败，未找到相关报修信息", 404);
         }
         return Result.success("查询成功", pageResultMap);
     }

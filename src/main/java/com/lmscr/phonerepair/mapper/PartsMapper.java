@@ -19,6 +19,7 @@ public interface PartsMapper extends BaseMapper<Parts> {
      * 获取所有配件列表
      *
      * @param page          分页信息
+     * @param userId        用户 ID
      * @param userRole      用户角色
      * @param searchKeyword 搜索关键词
      * @param sortField     排序字段
@@ -36,8 +37,9 @@ public interface PartsMapper extends BaseMapper<Parts> {
                     created_at AS createdAt
                 FROM
                     yjx_parts
+                LEFT JOIN yjx_user u ON #{userId} = u.user_id
                 WHERE 1 = 1
-                AND (#{userRole} IN (1, 3, 4))
+                AND (u.role_id IN (1, 3, 4) OR #{userId} = supplier_id)
                 AND (part_name LIKE CONCAT('%', #{searchKeyword}, '%')
                     OR part_description LIKE CONCAT('%', #{searchKeyword}, '%'))
                 ORDER BY
@@ -51,6 +53,7 @@ public interface PartsMapper extends BaseMapper<Parts> {
                     ${sortOrder == 'desc' ? 'DESC' : 'ASC'}
             """)
     IPage<Parts> selectPartsList(Page<Parts> page,
+                                 @Param("userId") Integer userId,
                                  @Param("userRole") Integer userRole,
                                  @Param("searchKeyword") String searchKeyword,
                                  @Param("sortField") String sortField,

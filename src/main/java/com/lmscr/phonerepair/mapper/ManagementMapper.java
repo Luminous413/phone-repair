@@ -53,9 +53,10 @@ public interface ManagementMapper extends BaseMapper<Management> {
                 -- 第二次关联：维修单表 → 用户表（通过用户 ID 关联，获取用户名）
                 LEFT JOIN yjx_user u
                     ON rr.user_id = u.user_id
+                LEFT JOIN yjx_user u2 ON #{userId} = u2.user_id
                 WHERE 1 = 1
                 -- 权限过滤：与你之前的逻辑一致（roleId = 1/3查全部，其他查自己关联的）
-                AND ( u.role_id IN (1, 3, 4) OR u.user_id = #{userId} )
+                AND ( u2.role_id IN (1, 3, 4) OR u.user_id = #{userId} )
                 -- 搜索关键词：模糊匹配手机型号、维修描述、用户名（前端可能按这些字段搜索）
                 AND (
                     rr.phone_model LIKE CONCAT('%', #{searchKeyword}, '%')
