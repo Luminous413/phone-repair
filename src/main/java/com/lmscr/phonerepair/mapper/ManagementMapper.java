@@ -54,8 +54,8 @@ public interface ManagementMapper extends BaseMapper<Management> {
                 LEFT JOIN yjx_user u
                     ON rr.user_id = u.user_id
                 WHERE 1 = 1
-                -- 权限过滤：与你之前的逻辑一致（userId = 1/3查全部，其他查自己关联的）
-                AND ( #{userId} IN (1, 3, 4) OR rm.technician_id = #{userId} )
+                -- 权限过滤：与你之前的逻辑一致（roleId = 1/3查全部，其他查自己关联的）
+                AND ( u.role_id IN (1, 3, 4) OR u.user_id = #{userId} )
                 -- 搜索关键词：模糊匹配手机型号、维修描述、用户名（前端可能按这些字段搜索）
                 AND (
                     rr.phone_model LIKE CONCAT('%', #{searchKeyword}, '%')
