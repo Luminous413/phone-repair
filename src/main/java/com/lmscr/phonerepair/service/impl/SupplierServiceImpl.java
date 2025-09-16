@@ -49,6 +49,7 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> i
         Page<Supplier> page = new Page<>(supplierManagementQueryModule.getPageNum(), supplierManagementQueryModule.getPageSize());
         IPage<Supplier> supplierIPage = supplierMapper.getAllWithPage(
                 page,
+                supplierManagementQueryModule.getUserId(),
                 supplierManagementQueryModule.getSearchKeyword(),
                 supplierManagementQueryModule.getSortField(),
                 supplierManagementQueryModule.getSortOrder()

@@ -1,5 +1,6 @@
 package com.lmscr.phonerepair.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor  // 全参构造函数
 @NoArgsConstructor  // 无参构造函数
 public class Management {
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer repairId;
     private Integer repairRequestId;
     private String technicianId;

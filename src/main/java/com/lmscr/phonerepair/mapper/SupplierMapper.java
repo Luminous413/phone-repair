@@ -13,6 +13,7 @@ public interface SupplierMapper extends BaseMapper<Supplier> {
      * 分页查询所有供应商信息
      *
      * @param page          分页对象
+     * @param userId        用户 ID
      * @param searchKeyword 搜索关键词
      * @param sortField     排序字段
      * @param sortOrder     排序顺序
@@ -30,8 +31,10 @@ public interface SupplierMapper extends BaseMapper<Supplier> {
                 FROM
                     yjx_supplier_management s
                 LEFT JOIN yjx_user u ON s.supplier_id = u.user_id
+                LEFT JOIN yjx_user u2 ON #{userId} = u2.user_id
                 LEFT JOIN yjx_parts p ON s.part_id = p.part_id
                 WHERE 1 = 1
+                AND (u2.role_id IN (1, 3) OR s.supplier_id = #{userId})
                 AND (u.user_name LIKE CONCAT('%', #{searchKeyword}, '%')
                     OR p.part_name LIKE CONCAT('%', #{searchKeyword}, '%'))
                 ORDER BY
@@ -47,6 +50,7 @@ public interface SupplierMapper extends BaseMapper<Supplier> {
                     ${sortOrder == 'desc' ? 'DESC' : 'ASC'}
             """)
     IPage<Supplier> getAllWithPage(Page<Supplier> page,
+                                   @Param("userId") Integer userId,
                                    @Param("searchKeyword") String searchKeyword,
                                    @Param("sortField") String sortField,
                                    @Param("sortOrder") String sortOrder);

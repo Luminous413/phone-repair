@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface RepairMapper extends BaseMapper<Repair> {
     /**
-     * 自定义分页查询方法：分页查询维修单：支持权限过滤（userId = 1/3 查全部，其他查自己）、搜索、排序
+     * 自定义分页查询方法：分页查询维修单：支持权限过滤（roleId = 1/3 查全部，其他查自己）、搜索、排序
      *
      * @param page          分页参数（页码、每页条数）
      * @param userId        当前登录用户 ID（用于权限过滤）
@@ -32,7 +32,7 @@ public interface RepairMapper extends BaseMapper<Repair> {
                 -- 关键：关联用户表，通过维修单的 receptionistId 匹配用户表的 userId
                 LEFT JOIN yjx_user u ON rr.receptionist_id = u.user_id
                 -- 修改：使用不同的别名避免关键字冲突
-                LEFT JOIN yjx_user cu ON cu.user_id = #{userId}
+                LEFT JOIN yjx_user cu ON #{userId} = cu.user_id
                 -- 修改：使用不同的别名避免关键字冲突
                 LEFT JOIN yjx_user ru ON ru.user_id = rr.user_id
                 WHERE 1 = 1
