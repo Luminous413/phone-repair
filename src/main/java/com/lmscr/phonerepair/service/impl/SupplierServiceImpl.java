@@ -23,9 +23,15 @@ import java.util.Map;
 
 @Service
 public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> implements SupplierService {
+    /**
+     * 用户映射器
+     */
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 供应商映射器
+     */
     @Autowired
     private SupplierMapper supplierMapper;
 

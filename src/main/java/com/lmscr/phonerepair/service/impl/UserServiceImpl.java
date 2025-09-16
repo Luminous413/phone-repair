@@ -224,6 +224,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (currentUser.getUserBio() == null) {
             currentUser.setUserBio("");
         }
+        // 校验邮箱是否被其他用户使用（邮箱具有唯一性）
+        User userByEmail = this.getOne(new QueryWrapper<User>()
+                .eq("user_email", currentUser.getUserEmail()));
+        if (userByEmail != null && !userByEmail.getUserId().equals(user.getUserId())) {
+            return Result.fail("邮箱已被其他用户使用", 500);
+        }
         // 更新用户信息
         boolean isUpdate = userMapper.updateUserByUserId(
                 currentUser.getUserId(),
@@ -275,6 +281,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         if (newUser.getUserPhone() == null) {
             newUser.setUserPhone("");
+        }
+        // 校验邮箱是否存在（邮箱具有唯一性）
+        User user = this.getOne(new QueryWrapper<User>()
+                .eq("user_email", newUser.getUserEmail()));
+        if (user != null) {
+            return Result.fail("邮箱已存在", 500);
         }
         // 创建用户
         boolean isCreate = userMapper.createNewUser(

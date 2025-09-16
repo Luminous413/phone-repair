@@ -100,6 +100,12 @@ public interface SupplierMapper extends BaseMapper<Supplier> {
                                      @Param("supplyQuantity") Integer supplyQuantity,
                                      @Param("updatedAt") LocalDateTime updatedAt);
 
+    /**
+     * 删除供应商管理
+     *
+     * @param supplierManagementId 供应商管理 ID
+     * @return 是否删除成功
+     */
     @Delete("""
                 DELETE
                 FROM

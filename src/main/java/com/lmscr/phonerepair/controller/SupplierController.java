@@ -13,6 +13,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/supplier")
 public class SupplierController {
+    /**
+     * 供应商服务
+     */
     @Autowired
     private SupplierService supplierService;
 
@@ -49,6 +52,14 @@ public class SupplierController {
         return supplierService.updateSupplierManagement(currentSupplierManagement);
     }
 
+    /**
+     * 删除供应商管理
+     *
+     * @param supplierManagementId 供应商管理 ID
+     * @param userId               用户 ID
+     * @param userPasswd           用户密码
+     * @return 结果
+     */
     @PostMapping("/deleteSupplierManagement")
     public Result<String> deleteSupplierManagement(@RequestParam(value = "supplierManagementId") Integer supplierManagementId,
                                                    @RequestParam(value = "userId") Integer userId,

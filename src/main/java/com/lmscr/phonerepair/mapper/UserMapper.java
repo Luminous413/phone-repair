@@ -89,7 +89,7 @@ public interface UserMapper extends BaseMapper<User> {
                          THEN CASE #{sortField} 
                               WHEN 'createdAt' THEN user_created_at 
                               WHEN 'userName' THEN user_name 
-                              ELSE user_created_at END 
+                              ELSE user_created_at END
                     ELSE user_created_at END
                     -- 排序方向：默认降序
                     ${sortOrder == 'desc' ? 'DESC' : 'ASC'}
