@@ -6,7 +6,7 @@ import com.lmscr.phonerepair.module.RepairManagement;
 import com.lmscr.phonerepair.module.UpdateRepairManagement;
 import com.lmscr.phonerepair.pojo.Management;
 import com.lmscr.phonerepair.module.TechnicianVO;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.Result;
 
 import java.util.List;
 import java.util.Map;

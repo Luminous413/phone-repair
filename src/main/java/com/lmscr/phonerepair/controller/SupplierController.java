@@ -4,7 +4,7 @@ import com.lmscr.phonerepair.module.CurrentSupplierManagement;
 import com.lmscr.phonerepair.module.NewSupplierManagement;
 import com.lmscr.phonerepair.module.SupplierManagementQueryModule;
 import com.lmscr.phonerepair.service.SupplierService;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -4,7 +4,7 @@ import com.lmscr.phonerepair.module.ReceptionistVO;
 import com.lmscr.phonerepair.module.RepairQueryModule;
 import com.lmscr.phonerepair.pojo.Repair;
 import com.lmscr.phonerepair.service.RepairService;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

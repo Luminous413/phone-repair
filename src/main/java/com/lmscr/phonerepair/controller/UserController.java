@@ -2,7 +2,7 @@ package com.lmscr.phonerepair.controller;
 
 import com.lmscr.phonerepair.module.*;
 import com.lmscr.phonerepair.service.UserService;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

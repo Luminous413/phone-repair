@@ -1,4 +1,4 @@
-package com.lmscr.phonerepair.service.util;
+package com.lmscr.phonerepair.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

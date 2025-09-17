@@ -10,8 +10,8 @@ import com.lmscr.phonerepair.pojo.Repair;
 import com.lmscr.phonerepair.pojo.User;
 import com.lmscr.phonerepair.service.RepairService;
 import com.lmscr.phonerepair.service.UserService;
-import com.lmscr.phonerepair.service.util.Md5Password;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.Md5Password;
+import com.lmscr.phonerepair.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

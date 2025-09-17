@@ -6,7 +6,7 @@ import com.lmscr.phonerepair.module.PartsListQueryModule;
 import com.lmscr.phonerepair.module.PartsSupplier;
 import com.lmscr.phonerepair.module.UpdatePart;
 import com.lmscr.phonerepair.pojo.Parts;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.Result;
 
 import java.util.List;
 import java.util.Map;

@@ -3,7 +3,7 @@ package com.lmscr.phonerepair.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lmscr.phonerepair.module.*;
 import com.lmscr.phonerepair.pojo.User;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.Result;
 
 import java.util.List;
 import java.util.Map;

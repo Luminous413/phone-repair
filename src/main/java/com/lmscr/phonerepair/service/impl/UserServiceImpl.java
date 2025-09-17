@@ -8,9 +8,9 @@ import com.lmscr.phonerepair.mapper.UserMapper;
 import com.lmscr.phonerepair.module.*;
 import com.lmscr.phonerepair.pojo.User;
 import com.lmscr.phonerepair.service.UserService;
-import com.lmscr.phonerepair.service.util.CheckParams;
-import com.lmscr.phonerepair.service.util.Md5Password;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.CheckParams;
+import com.lmscr.phonerepair.util.Md5Password;
+import com.lmscr.phonerepair.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -131,6 +131,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public Result<String> updatePassword(String userEmail, String userNewPassword) {
+        // 参数校验
+        if (userEmail == null || userNewPassword == null) {
+            return Result.fail("参数不能为空", 500);
+        }
+        // 判断用户是否存在
         User user = this.getOne(new QueryWrapper<User>()
                 .eq("user_email", userEmail));
         // 判断用户是否存在

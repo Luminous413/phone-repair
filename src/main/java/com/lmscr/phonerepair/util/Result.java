@@ -1,4 +1,4 @@
-package com.lmscr.phonerepair.service.util;
+package com.lmscr.phonerepair.util;
 
 import lombok.Data;
 

@@ -10,7 +10,7 @@ import com.lmscr.phonerepair.module.TechnicianVO;
 import com.lmscr.phonerepair.module.UpdateRepairManagement;
 import com.lmscr.phonerepair.pojo.Management;
 import com.lmscr.phonerepair.service.ManagementService;
-import com.lmscr.phonerepair.service.util.Result;
+import com.lmscr.phonerepair.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

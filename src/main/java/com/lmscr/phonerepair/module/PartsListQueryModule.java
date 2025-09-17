@@ -1,6 +1,6 @@
 package com.lmscr.phonerepair.module;
 
-import com.lmscr.phonerepair.service.util.PageParam;
+import com.lmscr.phonerepair.util.PageParam;
 import lombok.Data;
 
 @Data
